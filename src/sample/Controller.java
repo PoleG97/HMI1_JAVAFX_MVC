@@ -103,7 +103,7 @@ class FuncionARepetir extends TimerTask {
 
     public void run() {
         contador++;
-        System.out.println("ok"+contador);
+        System.out.println("toc toc"+contador);
     }
 }
 
