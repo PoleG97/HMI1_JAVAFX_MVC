@@ -18,8 +18,10 @@ import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
-    TimerTask task = new FuncionARepetir(0);
     Timer temporizador = new Timer();
+    TimerTask task = new FuncionARepetir(0);
+
+    boolean marca = true;
 
     private Model modelo = new Model();
 
@@ -84,17 +86,23 @@ public class Controller implements Initializable {
 
     //Métodos de arranque y paro de la lectura
     @FXML public void run(ActionEvent event){
-        temporizador.schedule(task, 0, 1000);
-        task.run();
+        if (marca){
+            temporizador.schedule(task, 0, 1000);
+            task.run();
+        }else {
+            TimerTask taskAux = new FuncionARepetir(0);
+            temporizador.schedule(taskAux,0, 1000);
+        }
     }
     @FXML public void stop(ActionEvent event){
-        task.cancel();
+        temporizador.cancel();
+        temporizador = new Timer();
+        marca = false;
     }
 }
 
 class FuncionARepetir extends TimerTask {
 
-    int loop = 5;
     int contador;
 
     public FuncionARepetir(int contador_param){
@@ -103,7 +111,7 @@ class FuncionARepetir extends TimerTask {
 
     public void run() {
         contador++;
-        System.out.println("toc toc"+contador);
+        System.out.println("toc toc" + contador);
     }
 }
 
