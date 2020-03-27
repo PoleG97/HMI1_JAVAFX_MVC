@@ -120,6 +120,7 @@ public class Model{
 
                 personasEnviar = Integer.toString(Personas);
 
+                //Llamamos a BoolToBrush pasando valores para cada circulo y vemos la salida
                 colorSalida1 = BoolToBrush(Salida1, circulo1);
                 colorSalida2 = BoolToBrush(Salida2, circulo2);
                 colorSalida3 = BoolToBrush(Salida3, circulo3);

@@ -70,13 +70,14 @@ public class Controller implements Initializable {
     }
     @FXML public void clickLeer(ActionEvent event){
         /*
-        String[] readData = modelo.LeerDB(ledContar, ledDecontar, ledReset);
+        String[] readData = modelo.LeerDB(ledContar, ledDecontar, ledReset);    //Almaceno la lectura
 
         String _personas = readData[0];
         String _colorContar = readData[1];
         String _colorDecontar = readData[2];
         String _colorReset = readData[3];
 
+        //Establezco en los elementos a los que accedo en Controller los valores de la función
         leerField.setText(_personas);
         ledContar.setFill(Paint.valueOf(_colorContar));
         ledDecontar.setFill(Paint.valueOf(_colorDecontar));
