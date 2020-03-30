@@ -18,11 +18,13 @@ import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
+    //Declaramos los objetos para la tarea programada
     Timer temporizador = new Timer();
     TimerTask task = new FuncionARepetir(0);
 
     boolean marca = true;
 
+    //Declaramos una instancia de Model() para poder usarlo
     private Model modelo = new Model();
 
     @FXML public TextField ipField;
@@ -69,7 +71,7 @@ public class Controller implements Initializable {
         modelo.WritevalInt(valorLeer);
     }
     @FXML public void clickLeer(ActionEvent event){
-        /*
+
         String[] readData = modelo.LeerDB(ledContar, ledDecontar, ledReset);    //Almaceno la lectura
 
         String _personas = readData[0];
@@ -82,7 +84,7 @@ public class Controller implements Initializable {
         ledContar.setFill(Paint.valueOf(_colorContar));
         ledDecontar.setFill(Paint.valueOf(_colorDecontar));
         ledReset.setFill(Paint.valueOf(_colorReset));
-        */
+
     }
 
     //Métodos de arranque y paro de la lectura
@@ -107,6 +109,7 @@ class FuncionARepetir extends TimerTask {
     int contador;
 
     public FuncionARepetir(int contador_param){
+
         contador = contador_param;
     }
 
