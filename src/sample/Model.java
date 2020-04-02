@@ -106,7 +106,7 @@ public class Model{
         Paint colorSalida3 = Color.GRAY;
 
         if (Client.Connected){
-            byte[] buffer = new byte[6];
+            byte[] buffer = new byte[8];
             int result = Client.ReadArea(S7.S7AreaDB, DBSample, 0, 4, buffer);
             if (result == 0){
 
@@ -127,6 +127,14 @@ public class Model{
         }
         String[] dataLeerDB = {personasEnviar, String.valueOf(colorSalida1), String.valueOf(colorSalida2), String.valueOf(colorSalida3)};
         return dataLeerDB;
+    }
+    public void LeerInt(){
+        if (Client.Connected) {
+            byte[] buffer = new byte[8];
+            int result = Client.ReadArea(S7.S7AreaDB, DBSample, 0, 4, buffer);
+            if (result == 0) {
+            }
+        }
     }
 
     public void WritePulContar(){
@@ -195,5 +203,7 @@ public class Model{
     //Metodos auxialiares de RUN/STOP
 
 }
+
+
 
 
