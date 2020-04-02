@@ -26,12 +26,10 @@ public class Model{
     boolean Salida3;
     int Personas;
 
-    public Paint BoolToBrush(boolean Salida, Circle circulo){
+    public Paint BoolToBrush(boolean Salida){
         if (Salida){
-            circulo.setFill(Color.GREEN);
             return Color.GREEN;
         }else{
-            circulo.setFill(Color.GRAY);
             return Color.GRAY;
         }
     }
@@ -101,7 +99,7 @@ public class Model{
         System.out.println("Execution time "+(System.currentTimeMillis()-Elapsed)+" ms");
     }
 
-    public String[] LeerDB(Circle circulo1, Circle circulo2, Circle circulo3){
+    public String[] LeerDB(){
         String personasEnviar = "";
         Paint colorSalida1 = Color.GRAY;
         Paint colorSalida2 = Color.GRAY;
@@ -121,9 +119,9 @@ public class Model{
                 personasEnviar = Integer.toString(Personas);
 
                 //Llamamos a BoolToBrush pasando valores para cada circulo y vemos la salida
-                colorSalida1 = BoolToBrush(Salida1, circulo1);
-                colorSalida2 = BoolToBrush(Salida2, circulo2);
-                colorSalida3 = BoolToBrush(Salida3, circulo3);
+                colorSalida1 = BoolToBrush(Salida1);
+                colorSalida2 = BoolToBrush(Salida2);
+                colorSalida3 = BoolToBrush(Salida3);
 
             }
         }

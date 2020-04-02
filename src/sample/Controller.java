@@ -18,15 +18,7 @@ import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
-    //Declaramos los objetos para la tarea programada
-    Timer temporizador = new Timer();
-    TimerTask task = new FuncionARepetir(0);
-
-    boolean marca = true;
-
-    //Declaramos una instancia de Model() para poder usarlo
-    private Model modelo = new Model();
-
+    //Declaraciones de los elementos GUI
     @FXML public TextField ipField;
     @FXML public TextField statusField;
     @FXML public TextField leerField;
@@ -34,6 +26,15 @@ public class Controller implements Initializable {
     @FXML public Circle ledContar;
     @FXML public Circle ledDecontar;
     @FXML public Circle ledReset;
+
+    //Declaramos los objetos para la tarea programada
+    Timer temporizador = new Timer();
+    TimerTask task = new FuncionARepetir();
+
+    boolean marca = true;
+
+    //Declaramos una instancia de Model() para poder usarlo
+    private Model modelo = new Model();
 
     //Método de inicialización, se puede asemejar al setup del arduino
     @Override
@@ -72,28 +73,16 @@ public class Controller implements Initializable {
     }
     @FXML public void clickLeer(ActionEvent event){
 
-        String[] readData = modelo.LeerDB(ledContar, ledDecontar, ledReset);    //Almaceno la lectura
-
-        String _personas = readData[0];
-        String _colorContar = readData[1];
-        String _colorDecontar = readData[2];
-        String _colorReset = readData[3];
-
-        //Establezco en los elementos a los que accedo en Controller los valores de la función
-        leerField.setText(_personas);
-        ledContar.setFill(Paint.valueOf(_colorContar));
-        ledDecontar.setFill(Paint.valueOf(_colorDecontar));
-        ledReset.setFill(Paint.valueOf(_colorReset));
-
     }
 
     //Métodos de arranque y paro de la lectura
     @FXML public void run(ActionEvent event){
+
         if (marca){
             temporizador.schedule(task, 0, 1000);
             task.run();
         }else {
-            TimerTask taskAux = new FuncionARepetir(0);
+            TimerTask taskAux = new FuncionARepetir();
             temporizador.schedule(taskAux,0, 1000);
         }
     }
@@ -106,14 +95,16 @@ public class Controller implements Initializable {
 
 class FuncionARepetir extends TimerTask {
 
-    int contador;
+    int contador = 0;
+    Circle mi_circulo;
 
-    public FuncionARepetir(int contador_param){
+    public FuncionARepetir(){
 
-        contador = contador_param;
+        //contador = contador_param;
     }
 
     public void run() {
+        //System.out.println(mi_circulo.getRadius());
         contador++;
         System.out.println("toc toc" + contador);
     }
