@@ -11,6 +11,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Model{
+
+    /*
+     * Declaramos las variables que usaremos en los métodos de PlcSerive
+     */
     public static final S7Client Client = new S7Client();
     public static byte[] Buffer = new byte[6];
     public static int DBSample = 1;
@@ -21,11 +25,21 @@ public class Model{
     private static int ok=0;
     private static int ko=0;
 
+    /*
+     * Declaración de variables, estas estan pensadas para la interacción
+     * con el PLC y la Aplicación en sí
+     */
     boolean Salida1;
     boolean Salida2;
     boolean Salida3;
     int Personas;
 
+    /*
+     * Esta función recibe un valor lógico, en función de él devuelve
+     * un valor Paint que se puede usar para colorear formas desde
+     * Controller.
+     * Si ==true ponemos VERDE ==false ponemos GRIS
+     */
     public Paint BoolToBrush(boolean Salida){
         if (Salida){
             return Color.GREEN;
@@ -34,6 +48,11 @@ public class Model{
         }
     }
 
+    /*
+     * Métodos relacionados con la conexión al PLC, solamente recibimos
+     * la IP, en teoría al no trabajar con varios PLC podemos dejar
+     * preconfigurado el rack y el slot
+     */
     public String Conectar(String _ip){
         String _IP = _ip;
         Client.SetConnectionType(S7.OP);
@@ -53,6 +72,10 @@ public class Model{
         return "Desconectado";
     }
 
+    /*
+     * Funciones auxialiares requeridas desde otras para mostrar
+     * el estado de la CPU y errores
+     */
     public void ShowStatus() {
         IntByRef PlcStatus = new IntByRef(S7.S7CpuStatusUnknown);
         TestBegin("GetPlcStatus()");
@@ -64,11 +87,9 @@ public class Model{
             {
                 case S7.S7CpuStatusRun :
                     System.out.println("RUN");
-                    //txtStatus.setText("RUN");
                     break;
                 case S7.S7CpuStatusStop :
                     System.out.println("STOP");
-                    //txtStatus.setText("STOP");
                     break;
                 default :
                     System.out.println("Unknown ("+PlcStatus.Value+")");
@@ -81,6 +102,11 @@ public class Model{
         System.out.println(S7Client.ErrorText(Code));
     }
 
+    /*
+     * Controlan el inicio y el final del test, el inicio es
+     * simplemente mensaje por consola y timepo de inicio.
+     * El final será por errores etc..
+     */
     static void TestBegin(String FunctionName) {
         System.out.println();
         System.out.println("+================================================================");
@@ -99,6 +125,12 @@ public class Model{
         System.out.println("Execution time "+(System.currentTimeMillis()-Elapsed)+" ms");
     }
 
+    /*
+     * Función de leer la DB, creamos el buffer de lectura
+     * y almacenamos las lecturas de posiciones de memoria
+     *
+     * Lo que lee LeerDB será lo que se lee de forma continua
+     */
     public String[] LeerDB(){
         String personasEnviar = "";
         Paint colorSalida1 = Color.GRAY;
@@ -137,6 +169,9 @@ public class Model{
         }
     }
 
+    /*
+     * Escribimos onformación en posiciones de la DB
+     */
     public void WritePulContar(){
         int writeResult = WriteBit("DB1.DBX0.0", true);
         if (writeResult != 0) {
@@ -199,8 +234,6 @@ public class Model{
         S7.SetBitAt(buffer, 0, bit, value);
         return Client.WriteArea(S7.S7AreaDB, db, pos + bit, buffer.length, buffer);
     }
-
-    //Metodos auxialiares de RUN/STOP
 
 }
 

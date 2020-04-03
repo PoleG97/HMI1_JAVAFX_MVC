@@ -105,9 +105,21 @@ public class Controller implements Initializable {
 
     }
 
-    //Métodos de arranque y paro de la lectura
+    /*
+     * Declaramos los métodos de RUN/STOP de la tarea programada para poder hacerlo
+     * desde un par de botones.
+     * El reinicio de la tarea es total, se crea una nueva tras haber parado, lo que
+     * significa que no tendrá memoria
+     */
     @FXML public void run(ActionEvent event){
-        System.out.println("Directo de controller: " + ledReset.getRadius());
+
+        /*
+         * La variable "marca" sirve para decidir que tipo de trabajo estamos haciendo.
+         * Esto quiere de decir que como vemos, este método se ejecutará con con RUN,
+         * por lo tanto, "marca" será capaz de decidir si tiene que crear una nueva tarea
+         * desde el principio (en el caso de que venga del botón STOP) o bien, crearma
+         * a partir de los elementos Timer y TimerTask creados con anteorioridad
+         */
         if (marca){
             temporizador.schedule(task, 0, 1000);
             task.run();
@@ -122,7 +134,14 @@ public class Controller implements Initializable {
         marca = false;
     }
 
-
+    /*
+     * Esta clase es una clase anidada en Controller para poder acceder
+     * a los elementos gráficos que se definen en ella. Esto habría sido
+     * tan simple como hacer que heredad de Controller, pero claro, para
+     * que pueda hacer la tarea de las repeticiones necesitamos que herede
+     * de TimerTask, y anidar la clase en Controller nos permite "saltarnos"
+     * el problema de la herencia múltiple
+     */
     class FuncionARepetir extends TimerTask {
 
         public void run() {
